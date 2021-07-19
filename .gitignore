@@ -3,7 +3,7 @@ __version__.py
 .idea
 .git
 .virtualenv
-.venv
+**/.venv
 .vscode
 *.log
 *.pyc
