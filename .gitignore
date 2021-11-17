@@ -11,3 +11,5 @@ __version__.py
 *local.py
 media
 .python-version
+.invoke
+.pytest_cache

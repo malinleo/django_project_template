@@ -6,6 +6,8 @@
 #
 asgiref==3.3.4
     # via django
+attrs==21.2.0
+    # via pytest
 backcall==0.2.0
     # via ipython
 click==8.0.1
@@ -20,6 +22,8 @@ flake8==3.9.2
     #   flake8-docstrings
 flake8-docstrings==1.6.0
     # via -r ./requirements/development.in
+iniconfig==1.1.1
+    # via pytest
 invoke==1.6.0
     # via -r ./requirements/development.in
 ipdb==0.13.7
@@ -38,6 +42,10 @@ matplotlib-inline==0.1.2
     # via ipython
 mccabe==0.6.1
     # via flake8
+packaging==21.2
+    # via
+    #   pytest
+    #   pytest-sugar
 parso==0.8.2
     # via jedi
 pep517==0.11.0
@@ -48,12 +56,16 @@ pickleshare==0.7.5
     # via ipython
 pip-tools==6.2.0
     # via -r ./requirements/development.in
+pluggy==1.0.0
+    # via pytest
 prompt-toolkit==3.0.18
     # via ipython
 psycopg2-binary==2.8.6
     # via -r ./requirements/base.in
 ptyprocess==0.7.0
     # via pexpect
+py==1.11.0
+    # via pytest
 pycodestyle==2.7.0
     # via flake8
 pydocstyle==6.1.1
@@ -62,14 +74,29 @@ pyflakes==2.3.1
     # via flake8
 pygments==2.9.0
     # via ipython
+pyparsing==2.4.7
+    # via packaging
+pytest==6.2.5
+    # via
+    #   -r ./requirements/base.in
+    #   pytest-django
+    #   pytest-sugar
+pytest-django==4.4.0
+    # via -r ./requirements/base.in
+pytest-sugar==0.9.4
+    # via -r ./requirements/base.in
 pytz==2021.1
     # via django
 snowballstemmer==2.1.0
     # via pydocstyle
 sqlparse==0.4.1
     # via django
+termcolor==1.1.0
+    # via pytest-sugar
 toml==0.10.2
-    # via ipdb
+    # via
+    #   ipdb
+    #   pytest
 tomli==1.0.4
     # via pep517
 traitlets==5.0.5

@@ -1,2 +1,9 @@
 django==3.2.3
 psycopg2-binary
+
+# Testing library
+pytest
+pytest-django
+
+# Prettify test output
+pytest-sugar

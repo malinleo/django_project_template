@@ -17,6 +17,7 @@ class UserAdmin(DjangoUserAdmin):
     Admin class definitions for ``User`` model.
 
     """
+
     search_fields = ('first_name', 'last_name', 'email')
     list_display = (
         'id',

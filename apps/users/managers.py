@@ -21,7 +21,6 @@ class UserManager(BaseUserManager):
         instead username.
 
         """
-
         if not email:
             raise ValueError(_("Users must have an email address!"))
 
