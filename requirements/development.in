@@ -4,6 +4,7 @@ ipython
 ipdb
 pip-tools
 invoke
+rich
 isort
 flake8
 flake8-docstrings

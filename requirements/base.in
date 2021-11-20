@@ -1,4 +1,6 @@
 django==3.2.3
+django-extensions
+Werkzeug
 psycopg2-binary
 
 # Testing library
