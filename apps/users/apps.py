@@ -9,4 +9,5 @@ class UsersAppConfig(AppConfig):
     verbose_name = _('Users')
 
     def ready(self):
+        """Initialize app."""
         from .api.auth import scheme  # noqa

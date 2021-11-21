@@ -1,5 +1,4 @@
 from django.utils.translation import gettext_lazy as _
-
 from drf_spectacular.extensions import OpenApiAuthenticationExtension
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from knox.views import LogoutAllView, LogoutView
@@ -11,10 +10,12 @@ from . import serializers, views
 
 class KnoxTokenScheme(OpenApiAuthenticationExtension):
     """Scheme to describe knox auth scheme."""
+
     target_class = "knox.auth.TokenAuthentication"
     name = "TokenAuth"
 
     def get_security_definition(self, auto_schema):
+        """Define settings for auth in spec."""
         return {
             "type": "apiKey",
             "in": "header",

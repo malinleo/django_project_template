@@ -105,6 +105,7 @@ class AuthTokenSerializer(serializers.Serializer):
 
 class TokenSerializer(OpenApiSerializer):
     """Auth token for entire app."""
+
     expiry = serializers.IntegerField(
         help_text=f"Token expires in {settings.REST_KNOX['TOKEN_TTL']}",
     )
