@@ -1,6 +1,21 @@
+# Django version
 django==3.2.3
+
+# DRF packages
+djangorestframework
+django-filter
+
+# Useful django utils
 django-extensions
 Werkzeug
+
+# Django custom authentication
+django-rest-knox
+
+# OpenAPI auto specs generator
+drf-spectacular
+
+# Postgres interaction
 psycopg2-binary
 
 # Testing library

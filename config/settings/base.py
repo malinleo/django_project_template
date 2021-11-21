@@ -1,6 +1,8 @@
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from datetime import timedelta
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -26,10 +28,22 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'apps.users',
-    'django_extensions',
 ]
+
+THIRD_PARTY = [
+    'rest_framework',
+    'django_filters',
+    'django_extensions',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',  # required for Django collectstatic discovery
+    'knox',
+]
+
+CUSTOM_APPS = [
+    'apps.users',
+]
+
+INSTALLED_APPS = INSTALLED_APPS + THIRD_PARTY + CUSTOM_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -39,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -130,3 +145,67 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 AUTH_USER_MODEL = 'users.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+
+# Project settings
+
+PROJECT_NAME = ''
+
+# REST framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        "knox.auth.TokenAuthentication",
+        # SessionAuthentication is also used for CSRF
+        # validation on ajax calls from the frontend
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+    ),
+    'DEFAULT_PAGINATION_CLASS': (
+        'rest_framework.pagination.LimitOffsetPagination'
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}
+
+REST_KNOX = {
+    'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+    'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+    'TOKEN_TTL': timedelta(weeks=2),
+    'TOKEN_LIMIT_PER_USER': None,
+    'AUTO_REFRESH': False,
+    'USER_SERIALIZER': 'apps.users.api.serializers.UserSerializer',
+}
+
+
+# DRF Spectacular settings
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': f'{PROJECT_NAME} API',
+    'DESCRIPTION': f'API spec for {PROJECT_NAME}',
+    'VERSION': '1.0.0',
+}
+
+# Debug toolbar
+
+
+def _show_toolbar_callback(request) -> bool:
+    """Always show debug toolbar for local/dev environ (exclude testing).
+
+    So you do not have to set `INTERNAL_IPS`. It"s a little pain with docker.
+
+    """
+    from django.conf import settings
+    return not settings.TESTING
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": _show_toolbar_callback,
+}
